@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlickHub — Sign In</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red:#E50914; --red-dark:#b20710;
+    --bg1:#060008; --bg2:#0f000d;
+    --glass:rgba(255,255,255,0.045);
+    --glass-b:rgba(255,255,255,0.09);
+    --text:#ffffff; --text-muted:#9a8fa0; --text-dim:#5a5060;
+    --green:#46d369;
+    --inp:rgba(255,255,255,0.055);
+    --inp-b:rgba(255,255,255,0.1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    min-height:100vh; background:var(--bg1);
+    color:var(--text); font-family:'Outfit',sans-serif;
+    display:flex; flex-direction:column;
+    position:relative; overflow-x:hidden;
+  }
+
+  /* BG */
+  .bg{
+    position:fixed; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse 900px 700px at 85% 10%,rgba(160,0,25,0.18) 0%,transparent 60%),
+      radial-gradient(ellipse 700px 500px at 15% 90%,rgba(120,0,50,0.15) 0%,transparent 60%),
+      radial-gradient(ellipse 350px 300px at 50% 50%,rgba(80,0,30,0.09) 0%,transparent 70%),
+      linear-gradient(160deg,#060008 0%,#0f000d 60%,#080006 100%);
+  }
+  .orb{
+    position:fixed; border-radius:50%;
+    filter:blur(90px); pointer-events:none; z-index:0;
+    animation:drift 14s ease-in-out infinite;
+  }
+  .o1{width:450px;height:450px;background:rgba(229,9,20,0.09);top:-120px;right:-120px;animation-delay:0s;}
+  .o2{width:320px;height:320px;background:rgba(140,0,60,0.08);bottom:-80px;left:-80px;animation-delay:-6s;}
+  .o3{width:220px;height:220px;background:rgba(229,9,20,0.06);top:45%;left:45%;animation-delay:-10s;}
+  @keyframes drift{
+    0%,100%{transform:translate(0,0);}
+    33%{transform:translate(-30px,25px);}
+    66%{transform:translate(25px,-30px);}
+  }
+  .grid{
+    position:fixed;inset:0;z-index:0;
+    background-image:
+      linear-gradient(rgba(229,9,20,0.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(229,9,20,0.025) 1px,transparent 1px);
+    background-size:52px 52px;
+  }
+
+  /* NAV */
+  nav{
+    position:relative;z-index:10;
+    padding:22px 60px;
+    display:flex;align-items:center;justify-content:space-between;
+    border-bottom:1px solid rgba(255,255,255,0.04);
+    background:rgba(6,0,8,0.3);backdrop-filter:blur(12px);
+  }
+  .logo{
+    font-family:'Bebas Neue',sans-serif;font-size:1.9rem;
+    letter-spacing:4px;color:var(--text);text-decoration:none;
+  }
+  .logo span{color:var(--red);}
+  .nav-btn{
+    color:var(--text-muted);font-size:0.85rem;text-decoration:none;
+    padding:9px 20px;border-radius:8px;
+    border:1px solid var(--glass-b);background:var(--glass);
+    backdrop-filter:blur(10px);transition:all 0.25s;
+  }
+  .nav-btn:hover{color:white;border-color:rgba(229,9,20,0.5);background:rgba(229,9,20,0.1);}
+
+  /* MAIN */
+  main{
+    position:relative;z-index:10;
+    flex:1;display:flex;align-items:center;justify-content:center;
+    padding:40px 20px;
+  }
+
+  /* GLASS CARD */
+  .card{
+    width:100%;max-width:460px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:26px;padding:48px 44px;
+    backdrop-filter:blur(50px) saturate(200%);
+    -webkit-backdrop-filter:blur(50px) saturate(200%);
+    box-shadow:
+      0 0 0 1px rgba(229,9,20,0.07),
+      0 40px 100px rgba(0,0,0,0.6),
+      inset 0 1px 0 rgba(255,255,255,0.09),
+      inset 0 -1px 0 rgba(0,0,0,0.3),
+      0 0 60px rgba(229,9,20,0.05);
+    animation:up 0.6s cubic-bezier(0.16,1,0.3,1);
+  }
+  @keyframes up{
+    from{opacity:0;transform:translateY(32px) scale(0.97);}
+    to{opacity:1;transform:translateY(0) scale(1);}
+  }
+
+  /* HEADER */
+  .hdr{text-align:center;margin-bottom:34px;}
+  /* Animated logo ring */
+  .ring-wrap{position:relative;width:72px;height:72px;margin:0 auto 18px;}
+  .ring-inner{
+    width:72px;height:72px;border-radius:50%;
+    background:linear-gradient(135deg,rgba(229,9,20,0.2),rgba(229,9,20,0.04));
+    border:1px solid rgba(229,9,20,0.25);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Bebas Neue',sans-serif;font-size:1.3rem;
+    letter-spacing:1px;color:var(--red);
+    box-shadow:0 8px 36px rgba(229,9,20,0.18),inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .ring-spin{
+    position:absolute;inset:-5px;border-radius:50%;
+    border:2px solid transparent;
+    border-top-color:rgba(229,9,20,0.7);
+    border-right-color:rgba(229,9,20,0.2);
+    animation:rspin 3s linear infinite;
+  }
+  @keyframes rspin{to{transform:rotate(360deg)}}
+  .hdr h1{
+    font-family:'Bebas Neue',sans-serif;font-size:2.3rem;
+    letter-spacing:2px;margin-bottom:6px;
+  }
+  .hdr h1 em{color:var(--red);font-style:normal;}
+  .hdr p{color:var(--text-muted);font-size:0.9rem;}
+
+  /* ERROR BANNER */
+  .err-banner{
+    background:rgba(255,60,60,0.08);border:1px solid rgba(255,60,60,0.25);
+    border-radius:10px;padding:12px 16px;margin-bottom:18px;
+    font-size:0.86rem;color:#ff7070;display:none;
+    animation:shake 0.4s ease;
+  }
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+
+  /* FIELDS */
+  .field{margin-bottom:16px;}
+  .field label{
+    display:block;font-size:0.72rem;font-weight:600;
+    letter-spacing:1px;text-transform:uppercase;
+    color:var(--text-muted);margin-bottom:7px;
+  }
+  .iw{position:relative;}
+  .ico{
+    position:absolute;left:14px;top:50%;transform:translateY(-50%);
+    font-size:0.92rem;color:var(--text-dim);
+    pointer-events:none;transition:color 0.25s;
+  }
+  input{
+    width:100%;padding:13px 14px 13px 42px;
+    background:var(--inp);border:1px solid var(--inp-b);
+    border-radius:10px;color:var(--text);
+    font-family:'Outfit',sans-serif;font-size:0.9rem;
+    outline:none;transition:all 0.25s;
+  }
+  input::placeholder{color:var(--text-dim);}
+  input:focus{
+    border-color:rgba(229,9,20,0.6);
+    background:rgba(229,9,20,0.06);
+    box-shadow:0 0 0 3px rgba(229,9,20,0.13);
+  }
+  .iw:focus-within .ico{color:rgba(229,9,20,0.8);}
+  input.bad{border-color:rgba(255,80,80,0.5);}
+  input.ok{border-color:rgba(70,211,105,0.4);}
+
+  .eye{
+    position:absolute;right:12px;top:50%;transform:translateY(-50%);
+    background:none;border:none;color:var(--text-dim);
+    cursor:pointer;font-size:0.9rem;line-height:1;
+    transition:color 0.2s;padding:4px;
+  }
+  .eye:hover{color:var(--text);}
+
+  .err{font-size:0.71rem;color:#ff6b6b;margin-top:5px;display:none;}
+
+  /* FORGOT */
+  .forgot{text-align:right;margin:-8px 0 18px;}
+  .forgot a{
+    color:var(--text-dim);font-size:0.8rem;text-decoration:none;
+    transition:color 0.2s;
+  }
+  .forgot a:hover{color:var(--red);}
+
+  /* BUTTON */
+  .btn{
+    width:100%;padding:14px;
+    background:linear-gradient(135deg,var(--red) 0%,#bf060f 100%);
+    border:none;border-radius:11px;
+    color:white;font-family:'Outfit',sans-serif;
+    font-size:0.95rem;font-weight:700;letter-spacing:0.5px;
+    cursor:pointer;transition:all 0.25s;
+    box-shadow:0 4px 24px rgba(229,9,20,0.4);
+    position:relative;overflow:hidden;
+  }
+  .btn::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(135deg,rgba(255,255,255,0.12) 0%,transparent 60%);
+    opacity:0;transition:opacity 0.25s;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(229,9,20,0.55);}
+  .btn:hover::after{opacity:1;}
+  .btn:active{transform:none;}
+  .btn.ld{pointer-events:none;opacity:0.75;}
+  .spin{
+    display:inline-block;width:14px;height:14px;
+    border:2px solid rgba(255,255,255,0.3);border-top-color:white;
+    border-radius:50%;animation:spin 0.7s linear infinite;
+    vertical-align:middle;margin-right:8px;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* DIVIDER */
+  .div{
+    display:flex;align-items:center;gap:12px;
+    margin:20px 0;color:var(--text-dim);font-size:0.8rem;
+  }
+  .div::before,.div::after{
+    content:'';flex:1;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.07),transparent);
+  }
+  .foot{text-align:center;font-size:0.87rem;color:var(--text-muted);}
+  .foot a{color:var(--red);font-weight:600;text-decoration:none;}
+  .foot a:hover{text-decoration:underline;}
+
+  /* SUCCESS */
+  .succ{display:none;text-align:center;padding:10px 0;animation:up 0.4s ease;}
+  .succ-ring{
+    width:80px;height:80px;border-radius:50%;margin:0 auto 20px;
+    background:rgba(70,211,105,0.1);border:2px solid var(--green);
+    display:flex;align-items:center;justify-content:center;font-size:2rem;
+    box-shadow:0 0 50px rgba(70,211,105,0.25);
+    animation:pop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+  .succ h2{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:2px;margin-bottom:8px;}
+  .succ p{color:var(--text-muted);margin-bottom:22px;font-size:0.9rem;line-height:1.6;}
+  .rbar{height:3px;background:rgba(255,255,255,0.07);border-radius:10px;overflow:hidden;margin-top:18px;}
+  .rfill{height:100%;background:var(--green);border-radius:10px;width:0;transition:width 3s linear;}
+
+  /* TOAST */
+  .toast{
+    position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);
+    background:rgba(15,0,12,0.96);border:1px solid rgba(255,255,255,0.09);
+    border-radius:12px;padding:13px 24px;
+    font-size:0.87rem;z-index:999;opacity:0;
+    transition:all 0.3s;pointer-events:none;
+    backdrop-filter:blur(24px);
+    box-shadow:0 8px 36px rgba(0,0,0,0.5);white-space:nowrap;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  @media(max-width:600px){
+    nav{padding:16px 20px;}
+    .card{padding:30px 20px;border-radius:18px;}
+  }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+<div class="grid"></div>
+
+<nav>
+  <a href="index.html" class="logo">Flick<span>Hub</span></a>
+  <a href="register.html" class="nav-btn">New here? Create Account →</a>
+</nav>
+
+<main>
+<div class="card">
+
+  <!-- LOGIN FORM -->
+  <div id="lv">
+    <div class="hdr">
+      <div class="ring-wrap">
+        <div class="ring-spin"></div>
+        <div class="ring-inner">FH</div>
+      </div>
+      <h1>Welcome <em>Back</em></h1>
+      <p>Sign in to continue watching</p>
+    </div>
+
+    <div class="err-banner" id="eb">⚠ Incorrect username or password. Please try again.</div>
+
+    <form id="lf" novalidate>
+      <div class="field">
+        <label>Username / User ID</label>
+        <div class="iw">
+          <span class="ico">@</span>
+          <input type="text" id="un" placeholder="Your User ID" autocomplete="username">
+        </div>
+        <div class="err" id="unE">Username is required</div>
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <div class="iw">
+          <span class="ico">🔒</span>
+          <input type="password" id="pw" placeholder="Your password" autocomplete="current-password">
+          <button type="button" class="eye" id="eyeB">👁</button>
+        </div>
+        <div class="err" id="pwE">Password is required</div>
+      </div>
+
+      <div class="forgot"><a href="#">Forgot password?</a></div>
+
+      <button type="submit" class="btn" id="sb">Sign In to FlickHub</button>
+    </form>
+
+    <div class="div">or</div>
+    <div class="foot">Don't have an account? <a href="register.html">Create one free</a></div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="succ" id="sv">
+    <div class="succ-ring">✓</div>
+    <h2>Welcome Back!</h2>
+    <p>Login successful!<br>Taking you to FlickHub now...</p>
+    <div class="rbar"><div class="rfill" id="rf2"></div></div>
+  </div>
+
+</div>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════════════════════════════
+// ⚙️ CONFIG — only change these lines
+// ════════════════════════════════════
+const BACKEND    = 'http://localhost:3000';  // ← your Node.js server URL
+const LANDING    = 'index.html';             // ← Netflix landing page
+
+function toast(msg,col){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.borderColor=col||'rgba(255,255,255,0.1)';
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+// Eye toggle
+document.getElementById('eyeB').onclick=function(){
+  const i=document.getElementById('pw');
+  i.type=i.type==='password'?'text':'password';
+  this.textContent=i.type==='password'?'👁':'🙈';
+};
+
+// Clear errors on type
+document.getElementById('un').addEventListener('input',function(){
+  this.classList.remove('bad');
+  document.getElementById('unE').style.display='none';
+  document.getElementById('eb').style.display='none';
+});
+document.getElementById('pw').addEventListener('input',function(){
+  this.classList.remove('bad');
+  document.getElementById('pwE').style.display='none';
+  document.getElementById('eb').style.display='none';
+});
+
+// Submit
+document.getElementById('lf').addEventListener('submit',async function(e){
+  e.preventDefault();
+
+  const un=document.getElementById('un').value.trim();
+  const pw=document.getElementById('pw').value;
+  let ok=true;
+
+  if(!un){
+    document.getElementById('un').classList.add('bad');
+    document.getElementById('unE').style.display='block';
+    ok=false;
+  }
+  if(!pw){
+    document.getElementById('pw').classList.add('bad');
+    document.getElementById('pwE').style.display='block';
+    ok=false;
+  }
+  if(!ok)return;
+
+  const btn=document.getElementById('sb');
+  btn.innerHTML='<span class="spin"></span> Signing In...';
+  btn.classList.add('ld');
+  document.getElementById('eb').style.display='none';
+
+  try{
+    const res=await fetch(`${BACKEND}/api/login`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({username:un,password:pw})
+    });
+    const data=await res.json();
+
+    if(res.ok&&data.success){
+      // Show success
+      document.getElementById('lv').style.display='none';
+      const sv=document.getElementById('sv');
+      sv.style.display='block';
+      // Animate redirect bar
+      requestAnimationFrame(()=>{
+        document.getElementById('rf2').style.width='100%';
+      });
+      // Redirect after 3s to Netflix landing
+      setTimeout(()=>{
+        window.location.href=data.redirectUrl||LANDING;
+      },3000);
+    } else {
+      // Wrong credentials — shake and show error
+      document.getElementById('eb').style.display='block';
+      document.getElementById('eb').style.animation='none';
+      requestAnimationFrame(()=>{
+        document.getElementById('eb').style.animation='shake 0.4s ease';
+      });
+      document.getElementById('un').classList.add('bad');
+      document.getElementById('pw').classList.add('bad');
+      document.getElementById('pw').value='';
+      btn.innerHTML='Sign In to FlickHub';
+      btn.classList.remove('ld');
+    }
+  }catch(err){
+    toast('⚠ Cannot reach server. Is it running?','rgba(255,80,80,0.4)');
+    btn.innerHTML='Sign In to FlickHub';
+    btn.classList.remove('ld');
+  }
+});
+</script>
+</body>
+</html>
