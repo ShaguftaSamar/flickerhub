@@ -159,6 +159,7 @@ app.post('/api/login', async (req, res) => {
 app.get('/',         (_, res) => res.sendFile(path.join(__dirname, 'public', 'login.html')));
 app.get('/login.html', (_, res) => res.sendFile(path.join(__dirname, 'public', 'login.html')));
 app.get('/register', (_, res) => res.sendFile(path.join(__dirname, 'public', 'register.html')));
+app.get('/register.html', (_, res) => res.sendFile(path.join(__dirname, 'public', 'register.html')));
 app.get('/home',     (_, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
 app.get('/index.html', (_, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
 
