@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlickHub — Create Account</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E50914; --red-dark: #b20710;
+    --bg1: #060008; --bg2: #0f000d;
+    --glass: rgba(255,255,255,0.045);
+    --glass-b: rgba(255,255,255,0.09);
+    --text: #ffffff; --text-muted: #9a8fa0; --text-dim: #5a5060;
+    --green: #46d369;
+    --inp: rgba(255,255,255,0.055);
+    --inp-b: rgba(255,255,255,0.1);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    min-height:100vh; background:var(--bg1);
+    color:var(--text); font-family:'Outfit',sans-serif;
+    display:flex; flex-direction:column;
+    position:relative; overflow-x:hidden;
+  }
+
+  /* BG */
+  .bg {
+    position:fixed; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse 1000px 800px at 10% 5%, rgba(180,0,25,0.2) 0%, transparent 60%),
+      radial-gradient(ellipse 700px 600px at 90% 95%, rgba(120,0,50,0.16) 0%, transparent 60%),
+      radial-gradient(ellipse 400px 300px at 55% 45%, rgba(90,0,30,0.1) 0%, transparent 70%),
+      linear-gradient(160deg,#060008 0%,#0f000d 60%,#080006 100%);
+  }
+  .orb {
+    position:fixed; border-radius:50%;
+    filter:blur(90px); pointer-events:none; z-index:0;
+    animation:drift 14s ease-in-out infinite;
+  }
+  .o1{width:500px;height:500px;background:rgba(229,9,20,0.1);top:-150px;left:-150px;animation-delay:0s;}
+  .o2{width:350px;height:350px;background:rgba(160,0,60,0.09);bottom:-100px;right:-100px;animation-delay:-5s;}
+  .o3{width:250px;height:250px;background:rgba(229,9,20,0.07);top:40%;left:55%;animation-delay:-9s;}
+  @keyframes drift {
+    0%,100%{transform:translate(0,0);}
+    33%{transform:translate(40px,-30px);}
+    66%{transform:translate(-25px,35px);}
+  }
+  .grid {
+    position:fixed; inset:0; z-index:0;
+    background-image:
+      linear-gradient(rgba(229,9,20,0.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(229,9,20,0.025) 1px,transparent 1px);
+    background-size:52px 52px;
+  }
+
+  /* NAV */
+  nav {
+    position:relative; z-index:10;
+    padding:22px 60px;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid rgba(255,255,255,0.04);
+    background:rgba(6,0,8,0.3); backdrop-filter:blur(12px);
+  }
+  .logo {
+    font-family:'Bebas Neue',sans-serif; font-size:1.9rem;
+    letter-spacing:4px; color:var(--text); text-decoration:none;
+  }
+  .logo span{color:var(--red);}
+  .nav-btn {
+    color:var(--text-muted); font-size:0.85rem; text-decoration:none;
+    padding:9px 20px; border-radius:8px;
+    border:1px solid var(--glass-b); background:var(--glass);
+    backdrop-filter:blur(10px); transition:all 0.25s;
+  }
+  .nav-btn:hover{color:white;border-color:rgba(229,9,20,0.5);background:rgba(229,9,20,0.1);}
+
+  /* MAIN */
+  main {
+    position:relative; z-index:10;
+    flex:1; display:flex; align-items:center; justify-content:center;
+    padding:40px 20px;
+  }
+
+  /* GLASS CARD */
+  .card {
+    width:100%; max-width:520px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:26px; padding:48px 44px;
+    backdrop-filter:blur(50px) saturate(200%);
+    -webkit-backdrop-filter:blur(50px) saturate(200%);
+    box-shadow:
+      0 0 0 1px rgba(229,9,20,0.07),
+      0 40px 100px rgba(0,0,0,0.55),
+      inset 0 1px 0 rgba(255,255,255,0.09),
+      inset 0 -1px 0 rgba(0,0,0,0.3),
+      0 0 60px rgba(229,9,20,0.04);
+    animation:up 0.6s cubic-bezier(0.16,1,0.3,1);
+  }
+  @keyframes up {
+    from{opacity:0;transform:translateY(32px) scale(0.97);}
+    to{opacity:1;transform:translateY(0) scale(1);}
+  }
+
+  /* HEADER */
+  .hdr{text-align:center;margin-bottom:34px;}
+  .hdr-icon {
+    width:62px; height:62px; border-radius:16px; margin:0 auto 16px;
+    background:linear-gradient(135deg,rgba(229,9,20,0.22),rgba(229,9,20,0.05));
+    border:1px solid rgba(229,9,20,0.28);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.6rem;
+    box-shadow:0 8px 36px rgba(229,9,20,0.18),inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .hdr h1{
+    font-family:'Bebas Neue',sans-serif; font-size:2.1rem;
+    letter-spacing:2px; margin-bottom:6px;
+  }
+  .hdr h1 em{color:var(--red);font-style:normal;}
+  .hdr p{color:var(--text-muted);font-size:0.9rem;}
+
+  /* PROGRESS */
+  .progress{display:flex;gap:6px;margin-bottom:30px;}
+  .ps{
+    flex:1; height:3px; border-radius:10px;
+    background:rgba(255,255,255,0.07); overflow:hidden; position:relative;
+  }
+  .ps::after{
+    content:''; position:absolute; inset:0; width:0;
+    border-radius:10px; transition:width 0.4s ease, background 0.4s;
+  }
+  .ps.active::after{width:100%;background:var(--red);}
+  .ps.done::after{width:100%;background:var(--green);}
+
+  /* FIELDS */
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .field{margin-bottom:15px;}
+  .field label{
+    display:block; font-size:0.72rem; font-weight:600;
+    letter-spacing:1px; text-transform:uppercase;
+    color:var(--text-muted); margin-bottom:7px;
+  }
+  .iw{position:relative;}
+  .ico{
+    position:absolute; left:14px; top:50%; transform:translateY(-50%);
+    font-size:0.92rem; color:var(--text-dim);
+    pointer-events:none; transition:color 0.25s; z-index:1;
+  }
+  input{
+    width:100%; padding:13px 14px 13px 42px;
+    background:var(--inp); border:1px solid var(--inp-b);
+    border-radius:10px; color:var(--text);
+    font-family:'Outfit',sans-serif; font-size:0.9rem;
+    outline:none; transition:all 0.25s;
+  }
+  input::placeholder{color:var(--text-dim);}
+  input:focus{
+    border-color:rgba(229,9,20,0.6);
+    background:rgba(229,9,20,0.06);
+    box-shadow:0 0 0 3px rgba(229,9,20,0.13);
+  }
+  .iw:focus-within .ico{color:rgba(229,9,20,0.8);}
+  input.ok{border-color:rgba(70,211,105,0.5);}
+  input.bad{border-color:rgba(255,80,80,0.5);}
+
+  .eye{
+    position:absolute; right:12px; top:50%; transform:translateY(-50%);
+    background:none; border:none; color:var(--text-dim);
+    cursor:pointer; font-size:0.9rem; line-height:1;
+    transition:color 0.2s; padding:4px;
+  }
+  .eye:hover{color:var(--text);}
+
+  .err{font-size:0.71rem;color:#ff6b6b;margin-top:5px;display:none;}
+
+  /* STRENGTH */
+  .str-wrap{margin-top:7px;}
+  .str-bars{display:flex;gap:4px;margin-bottom:4px;}
+  .sb{flex:1;height:3px;border-radius:10px;background:rgba(255,255,255,0.07);transition:background 0.3s;}
+  .sl{font-size:0.71rem;color:var(--text-dim);transition:color 0.3s;}
+
+  /* BUTTON */
+  .btn{
+    width:100%; padding:14px;
+    background:linear-gradient(135deg,var(--red) 0%,#bf060f 100%);
+    border:none; border-radius:11px;
+    color:white; font-family:'Outfit',sans-serif;
+    font-size:0.95rem; font-weight:700; letter-spacing:0.5px;
+    cursor:pointer; transition:all 0.25s; margin-top:8px;
+    box-shadow:0 4px 24px rgba(229,9,20,0.4);
+    position:relative; overflow:hidden;
+  }
+  .btn::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(135deg,rgba(255,255,255,0.12) 0%,transparent 60%);
+    opacity:0; transition:opacity 0.25s;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(229,9,20,0.55);}
+  .btn:hover::after{opacity:1;}
+  .btn:active{transform:none;}
+  .btn.ld{pointer-events:none;opacity:0.75;}
+  .spin{
+    display:inline-block; width:14px; height:14px;
+    border:2px solid rgba(255,255,255,0.3); border-top-color:white;
+    border-radius:50%; animation:spin 0.7s linear infinite;
+    vertical-align:middle; margin-right:8px;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* DIVIDER */
+  .div{
+    display:flex; align-items:center; gap:12px;
+    margin:20px 0; color:var(--text-dim); font-size:0.8rem;
+  }
+  .div::before,.div::after{
+    content:''; flex:1; height:1px;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.07),transparent);
+  }
+  .foot{text-align:center;font-size:0.87rem;color:var(--text-muted);}
+  .foot a{color:var(--red);font-weight:600;text-decoration:none;}
+  .foot a:hover{text-decoration:underline;}
+
+  /* SUCCESS */
+  .succ{display:none;text-align:center;padding:10px 0;animation:up 0.4s ease;}
+  .succ-ring{
+    width:80px;height:80px;border-radius:50%;margin:0 auto 20px;
+    background:rgba(70,211,105,0.1);border:2px solid var(--green);
+    display:flex;align-items:center;justify-content:center;font-size:2rem;
+    box-shadow:0 0 50px rgba(70,211,105,0.25);
+    animation:pop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+  .succ h2{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:2px;margin-bottom:8px;}
+  .succ p{color:var(--text-muted);margin-bottom:22px;font-size:0.9rem;line-height:1.6;}
+  .cd{color:var(--red);font-weight:700;}
+
+  /* TOAST */
+  .toast{
+    position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);
+    background:rgba(15,0,12,0.96);border:1px solid rgba(255,255,255,0.09);
+    border-radius:12px;padding:13px 24px;
+    font-size:0.87rem;z-index:999;opacity:0;
+    transition:all 0.3s;pointer-events:none;
+    backdrop-filter:blur(24px);
+    box-shadow:0 8px 36px rgba(0,0,0,0.5);white-space:nowrap;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  @media(max-width:600px){
+    nav{padding:16px 20px;}
+    .card{padding:30px 20px;border-radius:18px;}
+    .row{grid-template-columns:1fr;gap:0;}
+  }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+<div class="grid"></div>
+
+<nav>
+  <a href="index.html" class="logo">Flick<span>Hub</span></a>
+  <a href="login.html" class="nav-btn">Already a member? Sign In →</a>
+</nav>
+
+<main>
+<div class="card">
+
+  <!-- FORM -->
+  <div id="fv">
+    <div class="hdr">
+      <div class="hdr-icon">🎬</div>
+      <h1>Join <em>FlickHub</em></h1>
+      <p>Create your free account and start watching</p>
+    </div>
+
+    <div class="progress">
+      <div class="ps active" id="p1"></div>
+      <div class="ps" id="p2"></div>
+      <div class="ps" id="p3"></div>
+    </div>
+
+    <form id="rf" novalidate>
+      <div class="row">
+        <div class="field">
+          <label>User ID</label>
+          <div class="iw">
+            <span class="ico">@</span>
+            <input type="text" id="uid" maxlength="30" autocomplete="username">
+          </div>
+          <div class="err" id="uidE">Min 4 chars, no spaces</div>
+        </div>
+        <div class="field">
+          <label>Full Name</label>
+          <div class="iw">
+            <span class="ico">👤</span>
+            <input type="text" id="uname" maxlength="100" autocomplete="name">
+          </div>
+          <div class="err" id="unameE">Name is required</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Email Address</label>
+        <div class="iw">
+          <span class="ico">✉</span>
+          <input type="email" id="email" autocomplete="email">
+        </div>
+        <div class="err" id="emailE">Enter a valid email address</div>
+      </div>
+
+      <div class="field">
+        <label>Phone Number</label>
+        <div class="iw">
+          <span class="ico">📱</span>
+          <input type="tel" id="phone" maxlength="15" autocomplete="tel">
+        </div>
+        <div class="err" id="phoneE">Enter a valid phone number (digits only)</div>
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <div class="iw">
+          <span class="ico">🔒</span>
+          <input type="password" id="pass" placeholder="Minimum 8 characters" autocomplete="new-password">
+          <button type="button" class="eye" id="eyeB">👁</button>
+        </div>
+        <div class="str-wrap">
+          <div class="str-bars">
+            <div class="sb" id="s1"></div><div class="sb" id="s2"></div>
+            <div class="sb" id="s3"></div><div class="sb" id="s4"></div>
+          </div>
+          <div class="sl" id="sl">Enter a password</div>
+        </div>
+        <div class="err" id="passE">Password must be at least 8 characters</div>
+      </div>
+
+      <button type="submit" class="btn" id="sb">Create My Account</button>
+    </form>
+
+    <div class="div">or</div>
+    <div class="foot">Already have an account? <a href="login.html">Sign In</a></div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="succ" id="sv">
+    <div class="succ-ring">✓</div>
+    <h2>You're In!</h2>
+    <p>Account created successfully!<br>Redirecting to login in <span class="cd" id="cdn">3</span>s...</p>
+    <a href="login.html" class="btn" style="display:inline-block;text-decoration:none;text-align:center;padding:13px 32px;width:auto;">Go to Login →</a>
+  </div>
+
+</div>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════════════════════════════
+// ⚙️ CONFIG — only change this line
+// ════════════════════════════════════
+const BACKEND = 'http://localhost:3000';
+
+function toast(msg,col){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.style.borderColor=col||'rgba(255,255,255,0.1)';
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+// Eye
+document.getElementById('eyeB').onclick=function(){
+  const i=document.getElementById('pass');
+  i.type=i.type==='password'?'text':'password';
+  this.textContent=i.type==='password'?'👁':'🙈';
+};
+
+// Strength
+document.getElementById('pass').addEventListener('input',function(){
+  const v=this.value;
+  const bars=[1,2,3,4].map(n=>document.getElementById('s'+n));
+  const lbl=document.getElementById('sl');
+  let sc=0;
+  if(v.length>=8)sc++;
+  if(/[A-Z]/.test(v))sc++;
+  if(/[0-9]/.test(v))sc++;
+  if(/[^A-Za-z0-9]/.test(v))sc++;
+  const cols=['#ff4444','#ff8800','#f5c842','#46d369'];
+  const labs=['Too weak','Weak','Good','Strong 💪'];
+  bars.forEach((b,i)=>b.style.background=i<sc?cols[sc-1]:'rgba(255,255,255,0.07)');
+  lbl.textContent=v.length===0?'Enter a password':labs[sc-1]||labs[0];
+  lbl.style.color=v.length===0?'var(--text-dim)':cols[sc-1];
+  // Progress
+  ['p1','p2','p3'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    el.className='ps'+(i<Math.ceil(sc/1.4)?' active':'');
+  });
+});
+
+// Validate helper
+function chk(id,test,eid){
+  const el=document.getElementById(id);
+  const ok=test(el.value);
+  el.className=ok?'ok':'bad';
+  document.getElementById(eid).style.display=ok?'none':'block';
+  return ok;
+}
+
+// Live validation
+document.getElementById('uid').addEventListener('input',()=>chk('uid',v=>v.trim().length>=4&&!/\s/.test(v.trim()),'uidE'));
+document.getElementById('uname').addEventListener('input',()=>chk('uname',v=>v.trim().length>=2,'unameE'));
+document.getElementById('email').addEventListener('input',()=>chk('email',v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),'emailE'));
+document.getElementById('phone').addEventListener('input',()=>chk('phone',v=>/^\d{7,15}$/.test(v.trim()),'phoneE'));
+document.getElementById('pass').addEventListener('input',()=>chk('pass',v=>v.length>=8,'passE'));
+
+// Submit
+document.getElementById('rf').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const ok=
+    chk('uid',v=>v.trim().length>=4&&!/\s/.test(v.trim()),'uidE')&
+    chk('uname',v=>v.trim().length>=2,'unameE')&
+    chk('email',v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),'emailE')&
+    chk('phone',v=>/^\d{7,15}$/.test(v.trim()),'phoneE')&
+    chk('pass',v=>v.length>=8,'passE');
+  if(!ok){toast('⚠ Please fix the errors above','rgba(255,80,80,0.5)');return;}
+
+  const btn=document.getElementById('sb');
+  btn.innerHTML='<span class="spin"></span> Creating Account...';
+  btn.classList.add('ld');
+
+  try{
+    const res=await fetch(`${BACKEND}/api/register`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        userId:document.getElementById('uid').value.trim(),
+        name:document.getElementById('uname').value.trim(),
+        email:document.getElementById('email').value.trim(),
+        phone:document.getElementById('phone').value.trim(),
+        password:document.getElementById('pass').value,
+      })
+    });
+    const data=await res.json();
+    if(res.ok&&data.success){
+      document.getElementById('fv').style.display='none';
+      document.getElementById('sv').style.display='block';
+      let c=3;
+      const iv=setInterval(()=>{
+        c--; document.getElementById('cdn').textContent=c;
+        if(c<=0){clearInterval(iv);window.location.href='login.html';}
+      },1000);
+    } else {
+      toast(data.message||'Registration failed.','rgba(255,80,80,0.4)');
+      btn.innerHTML='Create My Account'; btn.classList.remove('ld');
+    }
+  } catch(err){
+    toast('⚠ Cannot reach server. Is it running?','rgba(255,80,80,0.4)');
+    btn.innerHTML='Create My Account'; btn.classList.remove('ld');
+  }
+});
+</script>
+</body>
+</html>
